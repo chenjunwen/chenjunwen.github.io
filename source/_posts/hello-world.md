@@ -4,7 +4,7 @@ tag: hexo
 ---
 
 
-### Create a new post
+### 创建文章
 
 ``` bash
 $ hexo new "My New Post"
@@ -12,7 +12,7 @@ $ hexo new "My New Post"
 
 More info: [Writing](https://hexo.io/docs/writing.html)
 
-### Run server
+### 运行
 
 ``` bash
 $ hexo server
@@ -20,7 +20,7 @@ $ hexo server
 
 More info: [Server](https://hexo.io/docs/server.html)
 
-### Generate static files
+### 生成静态文件
 
 ``` bash
 $ hexo generate
@@ -28,7 +28,7 @@ $ hexo generate
 
 More info: [Generating](https://hexo.io/docs/generating.html)
 
-### Deploy to remote sites
+### 部署至github
 
 ``` bash
 $ hexo deploy
