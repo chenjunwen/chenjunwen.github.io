@@ -260,7 +260,7 @@ vue-alert-loading是一个全局加载组件，以这个自定义组件作为演
        
 3. 发布之前先检查下npm有木有相同的包名，如果没有的话就恭喜你了，有的话那你就需要修改`package.json`的name了
     
-    npm search vue-alert-loading
+        npm search vue-alert-loading
     
 4. 如果没有的话就执行npm publish
 
