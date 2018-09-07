@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://owpnvitpy.bkt.clouddn.com/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="下载RabbitMq： Linux: centOS 7.0 版   rabbitMq: 3.7.7 rabbitMq服务端最新版网址下载，这里推荐3.7.7 RibbitMq 使用wget https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.7/rabbitmq-server-generic-unix-3.7.7.tar.xz下载至lin">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-RibbitMq安装">
+<meta property="og:url" content="http://chenjunwen.github.io/2018/09/06/Linux-RibbitMq安装/index.html">
+<meta property="og:site_name" content="小白之家">
+<meta property="og:description" content="下载RabbitMq： Linux: centOS 7.0 版   rabbitMq: 3.7.7 rabbitMq服务端最新版网址下载，这里推荐3.7.7 RibbitMq 使用wget https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.7/rabbitmq-server-generic-unix-3.7.7.tar.xz下载至lin">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-07T04:05:29.980Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux-RibbitMq安装">
+<meta name="twitter:description" content="下载RabbitMq： Linux: centOS 7.0 版   rabbitMq: 3.7.7 rabbitMq服务端最新版网址下载，这里推荐3.7.7 RibbitMq 使用wget https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.7/rabbitmq-server-generic-unix-3.7.7.tar.xz下载至lin">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'G59F9PHJPH',
+      apiKey: 'fd45c74158859bdf2ed2d2afaf4c1e21',
+      indexName: 'blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"请输入关键字","hits_empty":"没有找到与 “${query}” 相关内容","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenjunwen.github.io/2018/09/06/Linux-RibbitMq安装/"/>
+
+
+
+
+
+  <title>Linux-RibbitMq安装 | 小白之家</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?cddff6adbbe42a225414863f57b80b15";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小白之家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenjunwen.github.io/2018/09/06/Linux-RibbitMq安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Joven">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://owpnvitpy.bkt.clouddn.com/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小白之家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux-RibbitMq安装</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-06T16:10:18+08:00">
+                2018-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/06/Linux-RibbitMq安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/06/Linux-RibbitMq安装/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="下载RabbitMq："><a href="#下载RabbitMq：" class="headerlink" title="下载RabbitMq："></a>下载RabbitMq：</h2><ul>
+<li>Linux: centOS 7.0 版   rabbitMq: 3.7.7</li>
+<li>rabbitMq服务端最新版网址下载，这里推荐3.7.7 <a href="http://www.rabbitmq.com/install-generic-unix.html" target="_blank" rel="noopener">RibbitMq</a></li>
+<li>使用wget <a href="https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.7/rabbitmq-server-generic-unix-3.7.7.tar.xz下载至linux的/app目录下" target="_blank" rel="noopener">https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.7/rabbitmq-server-generic-unix-3.7.7.tar.xz下载至linux的/app目录下</a></li>
+</ul>
+<h2 id="下载Erlang"><a href="#下载Erlang" class="headerlink" title="下载Erlang"></a>下载Erlang</h2><ul>
+<li>因为rabbitMq是erlang编写的，安装mq前先安装erlang</li>
+<li>最新版下载网址<a href="http://www.erlang.org/downloads" target="_blank" rel="noopener">http://www.erlang.org/downloads</a></li>
+<li>使用wget <a href="http://erlang.org/download/otp_src_21.0.tar.gz" target="_blank" rel="noopener">http://erlang.org/download/otp_src_21.0.tar.gz</a> 下载至linux的/app目录下</li>
+</ul>
+<h2 id="Erlang的安装"><a href="#Erlang的安装" class="headerlink" title="Erlang的安装"></a>Erlang的安装</h2><pre><code>1.进入安装目录解压Erlang cd /app tar -xzvf otp_src_21.0.tar.gz
+2.创建erlang安装目录 mkdir /app/erlang
+3.进入解压目录cd /app/otp_src_21.0/
+4.配置安装路径编译代码：./configure --prefix=/app/erlang
+5.如果报No curses library functions found错，安装curses yum -y install ncurses-devel
+6.执行编译结果：make &amp;&amp; make install完成后进入/app/erlang查看执行结果    
+7.配置Erlang环境变量,vi /etc/profile文件，增加下面的环境变量:
+  export PATH=$PATH:/app/erlang/bin
+8.使得文件生效 source  /etc/profile 至此erlang安装完成
+9.验证erlang是否安装成功：erl
+  退出erl:halt();
+</code></pre><h2 id="RabbitMq安装"><a href="#RabbitMq安装" class="headerlink" title="RabbitMq安装"></a>RabbitMq安装</h2><pre><code>1.因为下载的是tar.xz文件所以先用xz -d rabbitmq-server-generic-unix-3.7.7.tar.xz解压成rabbitmq-server-generic-unix-3.7.7.tar
+然后再用tar -xvf rabbitmq-server-generic-unix-3.7.7.tar
+2.添加环境变量：export PATH=$PATH:/app/rabbitmq_server-3.7.7/sbin
+3.环境变量生效：source  /etc/profile
+4.进入sbin 启动服务：./rabbitmq-server -detached 后台启动   |start前台启动
+5.如果启动报错：&quot;init terminating in do_boot&quot;,{error,{missing_dependencies,[crypto,ssl]
+6.根据异常提示，原先以为是缺少了OpenSSL，但是检查后发现OpenSSL已经成功安装
+  $ openssl version
+  OpenSSL 1.0.2g  1 Mar 2016
+7.为什么会缺失crypto和ssl呢，百度，发现缺失了erlang-ssl但是yum找不到！！！在配置openssl后在Makefile中的CFLAG配置项后边添加 -fPIC参数。
+-fPIC（作用于编译阶段，告诉编译器产生与位置无关代码(Position-Independent Code)，则产生的代码中，没有绝对地址，全部使用相对地址，故而代码可以被加载器加载到内存的任意位置，都可以正确的执行。这正是共享库所要求的，共享库被加载时，在内存的位置不是固定的。）
+8.找到原因后重新安装openssl wget http://www.openssl.org/source/openssl-1.0.1i.tar.gz  
+  tar -zxf openssl-1.0.1i.tar.gz   
+  cd openssl-1.0.1i  
+  ./config --prefix=/app/ssl    
+  sed -i &quot;s|CFLAG= |CFLAG= -fPIC |&quot; Makefile  #一定不能少了这步
+  make &amp;&amp; make install
+  9.再配置安装erlang时指定刚才安装的open-ssl地址  ./configure --prefix=/app/erlang --prefix=/app/erlang  
+  10.rabbitmq-server -detached  总算启动成功了
+</code></pre><h2 id="配置网页插件"><a href="#配置网页插件" class="headerlink" title="配置网页插件"></a>配置网页插件</h2><ul>
+<li><p>首先创建目录，否则可能报错：mkdir /etc/rabbitmq </p>
+</li>
+<li><p>进入sbin 启用插件：./rabbitmq-plugins enable rabbitmq_management</p>
+</li>
+<li><p>启动mq：./rabbitmq-server -detached 后台启动| start 前台启动</p>
+</li>
+<li><p>配置linux 端口： 15672 网页管理，  5672 AMQP端口</p>
+</li>
+<li><p>然后访问<a href="http://127.0.01:15672" target="_blank" rel="noopener">http://127.0.01:15672</a></p>
+</li>
+<li><p>rabbitmq默认会创建guest账号，只能用于localhost登录页面管理员</p>
+</li>
+</ul>
+<blockquote>
+<p>进入sbin</p>
+<ul>
+<li>查看服务状态：rabbitmqctl status</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>关闭服务：rabbitmqctl stop</p>
+</li>
+<li><p>查看mq用户：rabbitmqctl list_users  </p>
+</li>
+<li><p>查看用户权限：rabbitmqctl list_user_permissions guest</p>
+</li>
+<li><p>新增用户： rabbitmqctl add_user admin 123456</p>
+</li>
+<li><p>赋予管理员权限：(需要服务启动)</p>
+</li>
+<li><p>rabbitmqctl set_user_tags admin administrator </p>
+</li>
+<li><p>rabbitmqctl set_permissions -p “/“ admin “.<em>“ “.</em>“ “.*”</p>
+</li>
+<li><p>至此安装完成 </p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.png" alt="Joven WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Joven Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/06/hello-world/" rel="next" title="hexo从零开始">
+                <i class="fa fa-chevron-left"></i> hexo从零开始
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://owpnvitpy.bkt.clouddn.com/touxiang.jpg"
+               alt="Joven" />
+          <p class="site-author-name" itemprop="name">Joven</p>
+           
+              <p class="site-description motion-element" itemprop="description">从哪里跌倒，就从哪爬起来！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="chenjunwenchn@qq.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenjunwen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/acb4fdd1006a" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.google.com.hk/" title="谷歌" target="_blank">谷歌</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载RabbitMq："><span class="nav-number">1.</span> <span class="nav-text">下载RabbitMq：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载Erlang"><span class="nav-number">2.</span> <span class="nav-text">下载Erlang</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Erlang的安装"><span class="nav-number">3.</span> <span class="nav-text">Erlang的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMq安装"><span class="nav-number">4.</span> <span class="nav-text">RabbitMq安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置网页插件"><span class="nav-number">5.</span> <span class="nav-text">配置网页插件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Joven</span>
+</div>
+
+
+<div class="powered-by">
+  小白教程
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://chenjunwen.github.io/2018/09/06/Linux-RibbitMq安装/';
+          this.page.identifier = '2018/09/06/Linux-RibbitMq安装/';
+          this.page.title = 'Linux-RibbitMq安装';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

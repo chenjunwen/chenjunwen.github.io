@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://owpnvitpy.bkt.clouddn.com/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="1.序言 Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作流数据。 这种动作（网页浏览，搜索和其他用户的行动）是在现代网络上的许多社会功能的一个关键因素。 这些数据通常是由于吞吐量的要求而通过处理日志和日志聚合来解决。 对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka的目的是通过Hadoop的并行加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka-windows">
+<meta property="og:url" content="http://chenjunwen.github.io/2017/11/25/Kafka-windows/index.html">
+<meta property="og:site_name" content="小白之家">
+<meta property="og:description" content="1.序言 Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作流数据。 这种动作（网页浏览，搜索和其他用户的行动）是在现代网络上的许多社会功能的一个关键因素。 这些数据通常是由于吞吐量的要求而通过处理日志和日志聚合来解决。 对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka的目的是通过Hadoop的并行加">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160903095658191">
+<meta property="og:updated_time" content="2018-09-06T02:27:40.221Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka-windows">
+<meta name="twitter:description" content="1.序言 Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作流数据。 这种动作（网页浏览，搜索和其他用户的行动）是在现代网络上的许多社会功能的一个关键因素。 这些数据通常是由于吞吐量的要求而通过处理日志和日志聚合来解决。 对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka的目的是通过Hadoop的并行加">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160903095658191">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'G59F9PHJPH',
+      apiKey: 'fd45c74158859bdf2ed2d2afaf4c1e21',
+      indexName: 'blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"请输入关键字","hits_empty":"没有找到与 “${query}” 相关内容","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenjunwen.github.io/2017/11/25/Kafka-windows/"/>
+
+
+
+
+
+  <title>Kafka-windows | 小白之家</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?cddff6adbbe42a225414863f57b80b15";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小白之家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenjunwen.github.io/2017/11/25/Kafka-windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Joven">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://owpnvitpy.bkt.clouddn.com/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小白之家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kafka-windows</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T16:27:03+08:00">
+                2017-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/25/Kafka-windows/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/25/Kafka-windows/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-序言"><a href="#1-序言" class="headerlink" title="1.序言"></a>1.序言</h1><blockquote>
+<p>Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者规模的网站中的所有动作流数据。 这种动作（网页浏览，搜索和其他用户的行动）是在现代网络上的许多社会功能的一个关键因素。 这些数据通常是由于吞吐量的要求而通过处理日志和日志聚合来解决。 对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka的目的是通过Hadoop的并行加载机制来统一线上和离线的消息处理，也是为了通过集群来提供实时的消费。</p>
+</blockquote>
+<blockquote>
+<p>Kafka[1]  是一种高吞吐量[2]  的分布式发布订阅消息系统，有如下特性：<br>通过O(1)的磁盘数据结构提供消息的持久化，这种结构对于即使数以TB的消息存储也能够保持长时间的稳定性能。<br>高吞吐量[2]  ：即使是非常普通的硬件Kafka也可以支持每秒数百万[2]  的消息。<br>支持通过Kafka服务器和消费机集群来分区消息。<br>支持Hadoop并行数据加载</p>
+</blockquote>
+<blockquote>
+<p>Kafka必须和zookeeper一起使用</p>
+</blockquote>
+<h1 id="2-Kafka相关术语介绍"><a href="#2-Kafka相关术语介绍" class="headerlink" title="2.Kafka相关术语介绍"></a>2.Kafka相关术语介绍</h1><ul>
+<li><p>Broker</p>
+<p>  Kafka集群包含一个或多个服务器，这种服务器被称为broker[5] </p>
+</li>
+<li><p>Topic</p>
+<p>  每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）</p>
+</li>
+<li><p>Partition</p>
+<p>  Partition是物理上的概念，每个Topic包含一个或多个Partition.</p>
+</li>
+<li><p>Producer</p>
+<p>  负责发布消息到Kafka broker</p>
+</li>
+<li><p>Consumer</p>
+<p>  消息消费者，向Kafka broker读取消息的客户端。</p>
+</li>
+<li><p>Consumer Group</p>
+<p>  每个Consumer属于一个特定的Consumer Group（可为每个Consumer指定group name，若不指定group name则属于默认的group）</p>
+<h1 id="三、安装与运行Kafka"><a href="#三、安装与运行Kafka" class="headerlink" title="三、安装与运行Kafka"></a>三、安装与运行Kafka</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><a href="http://kafka.apache.org/downloads.html" target="_blank" rel="noopener">http://kafka.apache.org/downloads.html</a><br>注意要下载二进制版本的<br><img src="http://img.blog.csdn.net/20160903095658191" alt="image"><br>下载后解压到任意一个目录，笔者的是D:\kafka_2.11-0.10.0.1</p>
+</li>
+</ul>
+<ol>
+<li>进入Kafka配置目录，D:\kafka_2.11-0.10.0.1</li>
+<li>编辑文件“server.properties”</li>
+<li>找到并编辑log.dirs=D:\kafka_2.11-0.10.0.1\kafka-log,这里的目录自己修改成自己喜欢的</li>
+<li>找到并编辑zookeeper.connect=localhost:2181。表示本地运行</li>
+<li><p>Kafka会按照默认，在9092端口上运行，并连接zookeeper的默认端口：2181。</p>
+<h2 id="运行："><a href="#运行：" class="headerlink" title="运行："></a>运行：</h2><p>重要：请确保在启动Kafka服务器前,如果报错的话就重启电脑，Zookeeper实例已经准备好并开始运行。</p>
+</li>
+<li><p>进入Kafka安装目录D:\kafka_2.11-0.10.0.1</p>
+</li>
+<li>按下Shift+右键，选择“打开命令窗口”选项，打开命令行。</li>
+<li>现在输入<blockquote>
+<pre><code>.\bin\windows\kafka-server-start.bat .\config\server.properties   
+</code></pre></blockquote>
+</li>
+</ol>
+<h2 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a><a href="http://blog.csdn.net/evankaka/article/details/52421314" target="_blank" rel="noopener">原文地址</a></h2><h1 id="四、测试"><a href="#四、测试" class="headerlink" title="四、测试"></a>四、测试</h1><p>上面的Zookeeper和kafka一直打开</p>
+<ul>
+<li>（1）、创建主题</li>
+</ul>
+<ol>
+<li>进入Kafka安装目录D:\kafka_2.11-0.10.0.1</li>
+<li>按下Shift+右键，选择“打开命令窗口”选项，打开命令行。</li>
+<li>现在输入</li>
+</ol>
+<blockquote>
+<p>.\bin\windows\kafka-topics.bat –create –zookeeper localhost:2181 –replication-factor 1 –partitions 1 –topic linlin</p>
+</blockquote>
+<h4 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h4><ul>
+<li>–replication-factor 2   #复制两份</li>
+<li>–partitions 1 #创建1个分区</li>
+<li>–topic #主题为shuaige</li>
+</ul>
+<p>==不要关闭窗口==</p>
+<ul>
+<li>（2）创建生产者</li>
+</ul>
+<ol>
+<li>进入Kafka安装目录D:\kafka_2.11-0.10.0.1</li>
+<li>按下Shift+右键，选择“打开命令窗口”选项，打开命令行。</li>
+<li>现在输入<blockquote>
+<p>.\bin\windows\kafka-console-producer.bat –broker-list localhost:9092 –topic linlin</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>（3）创建消费者</li>
+</ul>
+<ol>
+<li>进入Kafka安装目录D:\kafka_2.11-0.10.0.1</li>
+<li>按下Shift+右键，选择“打开命令窗口”选项，打开命令行。</li>
+<li>现在输入<blockquote>
+<p>.\bin\windows\kafka-console-consumer.bat –zookeeper localhost:2181 –topic linlin</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>（4）其他命令<blockquote>
+<p>查看topic</p>
+</blockquote>
+</li>
+</ul>
+<pre><code>./kafka-topics.sh --list --zookeeper localhost:12181
+#就会显示我们创建的所有topic
+</code></pre><blockquote>
+<p>查看topic状态</p>
+</blockquote>
+<pre><code>/kafka-topics.sh --describe --zookeeper localhost:12181 --topic shuaige
+#下面是显示信息
+Topic:ssports    PartitionCount:1    ReplicationFactor:2    Configs:
+    Topic: shuaige    Partition: 0    Leader: 1    Replicas: 0,1    Isr: 1
+#分区为为1  复制因子为2   他的  shuaige的分区为0 
+#Replicas: 0,1   复制的为0，1
+</code></pre><blockquote>
+<p>更多请看官方文档：<a href="http://kafka.apache.org/documentation.html" target="_blank" rel="noopener">http://kafka.apache.org/documentation.html</a></p>
+</blockquote>
+<blockquote>
+<p>zookeeper 和 kafka 集群搭建: <a href="http://blog.csdn.net/my_bai/article/details/68490632" target="_blank" rel="noopener">http://blog.csdn.net/my_bai/article/details/68490632</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.png" alt="Joven WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Joven Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/25/vue自定义组件发布至npm/" rel="next" title="vue自定义组件发布至npm">
+                <i class="fa fa-chevron-left"></i> vue自定义组件发布至npm
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/06/hello-world/" rel="prev" title="hexo从零开始">
+                hexo从零开始 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://owpnvitpy.bkt.clouddn.com/touxiang.jpg"
+               alt="Joven" />
+          <p class="site-author-name" itemprop="name">Joven</p>
+           
+              <p class="site-description motion-element" itemprop="description">从哪里跌倒，就从哪爬起来！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="chenjunwenchn@qq.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenjunwen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/acb4fdd1006a" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.google.com.hk/" title="谷歌" target="_blank">谷歌</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-序言"><span class="nav-number">1.</span> <span class="nav-text">1.序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Kafka相关术语介绍"><span class="nav-number">2.</span> <span class="nav-text">2.Kafka相关术语介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、安装与运行Kafka"><span class="nav-number">3.</span> <span class="nav-text">三、安装与运行Kafka</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">3.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行："><span class="nav-number">3.2.</span> <span class="nav-text">运行：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文地址"><span class="nav-number">3.3.</span> <span class="nav-text">原文地址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、测试"><span class="nav-number">4.</span> <span class="nav-text">四、测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解释"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">解释</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Joven</span>
+</div>
+
+
+<div class="powered-by">
+  小白教程
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://chenjunwen.github.io/2017/11/25/Kafka-windows/';
+          this.page.identifier = '2017/11/25/Kafka-windows/';
+          this.page.title = 'Kafka-windows';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

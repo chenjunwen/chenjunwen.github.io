@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vue," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://owpnvitpy.bkt.clouddn.com/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="项目案例 vue-alert-loadingvue-alert-loading是一个全局加载组件，以这个自定义组件作为演示；该组件已发布至npm，只需npm install vue-alert-alert –save即可使用，详情请看demo 项目准备 nodejs的安装 npm 安装 vue-cli安装  初始化组件# 使用webpack-simple模板初始化，比较适合写自定义插件 vue i">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue自定义组件发布至npm">
+<meta property="og:url" content="http://chenjunwen.github.io/2017/11/25/vue自定义组件发布至npm/index.html">
+<meta property="og:site_name" content="小白之家">
+<meta property="og:description" content="项目案例 vue-alert-loadingvue-alert-loading是一个全局加载组件，以这个自定义组件作为演示；该组件已发布至npm，只需npm install vue-alert-alert –save即可使用，详情请看demo 项目准备 nodejs的安装 npm 安装 vue-cli安装  初始化组件# 使用webpack-simple模板初始化，比较适合写自定义插件 vue i">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-06T02:27:40.222Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue自定义组件发布至npm">
+<meta name="twitter:description" content="项目案例 vue-alert-loadingvue-alert-loading是一个全局加载组件，以这个自定义组件作为演示；该组件已发布至npm，只需npm install vue-alert-alert –save即可使用，详情请看demo 项目准备 nodejs的安装 npm 安装 vue-cli安装  初始化组件# 使用webpack-simple模板初始化，比较适合写自定义插件 vue i">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'G59F9PHJPH',
+      apiKey: 'fd45c74158859bdf2ed2d2afaf4c1e21',
+      indexName: 'blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"请输入关键字","hits_empty":"没有找到与 “${query}” 相关内容","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenjunwen.github.io/2017/11/25/vue自定义组件发布至npm/"/>
+
+
+
+
+
+  <title>vue自定义组件发布至npm | 小白之家</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?cddff6adbbe42a225414863f57b80b15";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小白之家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenjunwen.github.io/2017/11/25/vue自定义组件发布至npm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Joven">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://owpnvitpy.bkt.clouddn.com/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小白之家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue自定义组件发布至npm</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T15:05:51+08:00">
+                2017-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/25/vue自定义组件发布至npm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/25/vue自定义组件发布至npm/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="项目案例-vue-alert-loading"><a href="#项目案例-vue-alert-loading" class="headerlink" title="项目案例 vue-alert-loading"></a>项目案例 <a href="vue-alert-loading">vue-alert-loading</a></h2><p>vue-alert-loading是一个全局加载组件，以这个自定义组件作为演示；该组件已发布至npm，只需npm install vue-alert-alert –save即可使用，<br>详情请看<a href="https://chenjunwen.github.io/vue-alert-loading/">demo</a></p>
+<h2 id="项目准备"><a href="#项目准备" class="headerlink" title="项目准备"></a>项目准备</h2><ul>
+<li>nodejs的安装</li>
+<li>npm 安装</li>
+<li>vue-cli安装</li>
+</ul>
+<h2 id="初始化组件"><a href="#初始化组件" class="headerlink" title="初始化组件"></a>初始化组件</h2><pre><code># 使用webpack-simple模板初始化，比较适合写自定义插件
+vue init webpack-simple vue-alert-loading
+cd vue-alert-loading
+npm install
+npm run dev
+</code></pre><h2 id="创建你的组件"><a href="#创建你的组件" class="headerlink" title="创建你的组件"></a>创建你的组件</h2><pre><code>在src新建loaing文件夹
+在loading文件夹创建loading.vue
+在loading文件夹下创建index.js文件
+</code></pre><blockquote>
+<p>loading.vue</p>
+</blockquote>
+<pre><code>&lt;template&gt;
+  &lt;div v-if=&quot;visible&quot; :class=&quot;&apos;cpt-loading-mask animated fadeInNoTransform &apos;+direction&quot;
+       :style=&quot;{background: loadingMaskBg, &apos;z-index&apos;: 1000001, position: &apos;fixed&apos;}&quot;&gt;
+    &lt;div class=&quot;div-loading&quot; :style=&quot;{width:loadingDivWidth+&apos;px&apos;, background: loadingBg}&quot;&gt;
+      &lt;p class=&quot;loading-title txt-textOneRow&quot; :style=&quot;{color: titleColor}&quot;&gt;{{title}}&lt;/p&gt;
+
+      &lt;div v-if=&quot;type!==&apos;pic&apos;&quot; class=&quot;loading origin&quot; :style=&quot;{ height: originDivHeight+&apos;px&apos;, width: originDivWidth +&apos;px&apos;}&quot;&gt;
+        &lt;div class=&quot;div-loadingOrigin&quot; v-for=&quot;n in originSize&quot;&gt;
+          &lt;span :style=&quot;{&apos;margin-top&apos;: &apos;-10px&apos;,&apos;margin-left&apos;: &apos;-10px&apos;, width: originWidth+&apos;px&apos;, height: originHeight+&apos;px&apos;, background:originBg}&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;loading pic&quot; :style=&quot;{ height: originDivHeight+&apos;px&apos;, width: originDivHeight +&apos;px&apos;}&quot; v-else&gt;
+          &lt;img src=&quot;http://www.daiwei.org/index/images/logo/dw.png&quot;  alt=&quot;loading&quot; &gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;loading-discription txt-textOneRow&quot; :style=&quot;{color: textColor}&quot;&gt;{{text}}&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;style scoped&gt;
+  # 这里用到了外部css需要的话，地址如下  https://github.com/chenjunwen/vue-alert-loading/tree/master/src/loading
+  @import &quot;./css/loading.css&quot;;
+  @import &quot;./css/animate.css&quot;;
+&lt;/style&gt;
+
+&lt;script&gt;
+  export default {
+    name:&apos;VueAlertLoading&apos;,
+    props:{
+      // 标题
+      title: {
+        type: String,
+        default: &apos;请稍等!&apos;
+      },
+      // 标题颜色
+      titleColor:{
+        type: String,
+        default: &apos;rgba(255, 255, 255, 0.7)&apos;
+      },
+      // loading的描述
+      text: {
+        type: String,
+        default: &apos;&apos;
+      },
+      // 描述文本颜色
+      textColor:{
+        type: String,
+        default: &apos;rgba(255,255,255,0.7)&apos;
+      },
+      // 方向，col纵向   row 横向
+      direction:{
+        type: String,
+        default: &apos;col&apos;
+      },
+      // 是否显示
+      visible:Boolean,
+      // 中间加载div的宽度
+      loadingDivWidth: {
+        type: Number,
+        default: 260
+      },
+      // 圆点的个数
+      originSize:{
+        type: Number,
+        default: 6
+      },
+      // 小圆点的宽度
+      originWidth:{
+        type: Number,
+        default: 6
+      },
+      // 小圆点的高度
+      originHeight:{
+        type: Number,
+        default: 6
+      },
+      // 小圆点的背景色
+      originBg:{
+        type:String,
+        default:&apos;rgb(254, 254, 254)&apos;
+      },
+      // loadingDiv的宽度
+      originDivWidth:{
+        type: Number,
+        default: 40
+      },
+      // loadingDiv的宽度
+      originDivHeight:{
+        type: Number,
+        default: 40
+      },
+      //pic：图片   origin：圆点
+      type:{
+        type: String,
+        default: &apos;origin&apos;
+      },
+      // 中间的背景色
+      loadingBg:{
+        type:String,
+        default:&apos;rgba(0, 0, 0, 0.6)&apos;
+      },
+
+      // 背景遮罩层颜色
+      loadingMaskBg:{
+        type:String,
+        default:&apos;rgba(0, 0, 0, 0.2)&apos;
+      }
+    },
+    data() {
+      return {
+
+      }
+    }
+  }
+&lt;/script&gt;
+</code></pre><blockquote>
+<p>index.js # 这里主要是导出loading模块</p>
+</blockquote>
+<pre><code>import Loading from &apos;./loading.vue&apos;
+Loading.install = (Vue) =&gt; {
+  Vue.component(Loading.name, Loading);
+}
+
+export default Loading;
+</code></pre><h2 id="修改配置项"><a href="#修改配置项" class="headerlink" title="修改配置项"></a>修改配置项</h2><blockquote>
+<p>webpack.config.js</p>
+</blockquote>
+<p>这里主要修改filename,你总不想你文件还叫build.js吧<br>部分代码展示：</p>
+<pre><code>module.exports = {
+  entry: &apos;./src/main.js&apos;,
+  output: {
+    path: path.resolve(__dirname, &apos;./dist&apos;),
+    publicPath: &apos;/dist/&apos;,
+    filename: &apos;vue-alert-loading.js&apos;
+  }
+}
+</code></pre><blockquote>
+<p>package.json</p>
+</blockquote>
+<pre><code>{
+  &quot;name&quot;: &quot;vue-alert-loading&quot;,
+  &quot;description&quot;: &quot;Vue custom load components&quot;,
+  # 版本号 如果publish的时候项目文件修改了的话这里一定要修改版本号不然会报错
+  &quot;version&quot;: &quot;3.0.3&quot;,
+  &quot;author&quot;: &quot;chenjunwen &lt;18296456378@163.com&gt;&quot;,
+  &quot;license&quot;: &quot;MIT&quot;,
+  # 这里需要改成公有，私有的需要收费
+  &quot;private&quot;: false,
+  &quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;cross-env NODE_ENV=development webpack-dev-server --open --hot&quot;,
+    &quot;build&quot;: &quot;cross-env NODE_ENV=production webpack --progress --hide-modules&quot;
+  },
+  &quot;dependencies&quot;: {
+  },
+  &quot;browserslist&quot;: [
+    &quot;&gt; 1%&quot;,
+    &quot;last 2 versions&quot;,
+    &quot;not ie &lt;= 8&quot;
+  ],
+  # 项目地址
+  &quot;repository&quot;: {
+    &quot;type&quot;: &quot;git&quot;,
+    &quot;url&quot;: &quot;git+https://github.com/chenjunwen/vue-alert-loading.git&quot;
+  },
+  # npm 搜索关键字
+  &quot;keywords&quot;: [
+    &quot;vue-alert&quot;,
+    &quot;vue-loading&quot;,
+    &quot;vue-alert-loading&quot;
+    ],
+   # 配置main结点，如果不配置，我们在其他项目中就不用import XX from &apos;包名&apos;来引用了，只能以包名作为起点来指定相对的路径
+  &quot;main&quot;:&quot;src/loading/index.js&quot;,
+
+  &quot;devDependencies&quot;: {
+    &quot;babel-core&quot;: &quot;^6.26.0&quot;,
+    &quot;babel-loader&quot;: &quot;^7.1.2&quot;,
+    &quot;babel-preset-env&quot;: &quot;^1.6.0&quot;,
+    &quot;babel-preset-stage-3&quot;: &quot;^6.24.1&quot;,
+    &quot;cross-env&quot;: &quot;^5.0.5&quot;,
+    &quot;css-loader&quot;: &quot;^0.28.7&quot;,
+    &quot;file-loader&quot;: &quot;^1.1.4&quot;,
+    &quot;vue&quot;: &quot;^2.4.4&quot;,
+    &quot;vue-loader&quot;: &quot;^13.0.5&quot;,
+    &quot;vue-template-compiler&quot;: &quot;^2.4.4&quot;,
+    &quot;webpack&quot;: &quot;^3.6.0&quot;,
+    &quot;webpack-dev-server&quot;: &quot;^2.9.1&quot;
+  },
+  # 这里表示的是依赖安装，也就是该项目是基于vue模块下运行的 将dependencies里面的vue模块删除，不然到时候打包的话会将vue也打包进去
+  &quot;peerDependencies&quot;:{
+    &quot;vue&quot;: &quot;^2.4.4&quot;
+  }
+}
+</code></pre><h2 id="npmignore文件"><a href="#npmignore文件" class="headerlink" title=".npmignore文件"></a>.npmignore文件</h2><p>该文件主要是排除不需上传至npm的文件（可自定义，和.gitignore写法相同）<br>我的配置如下：</p>
+<pre><code>.idea
+node_modules/
+index.html
+webpack.config.js
+.babelrc
+.editorconfig
+.npmignore
+.gitignore
+*.map
+app.css
+App.vue
+main.js
+</code></pre><h2 id="打包至本地"><a href="#打包至本地" class="headerlink" title="打包至本地"></a>打包至本地</h2><pre><code>npm run build
+</code></pre><h2 id="发布至npm"><a href="#发布至npm" class="headerlink" title="发布至npm"></a>发布至npm</h2><ol>
+<li>在 <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npm官网</a> 注册一个npm账号 填写邮箱并一定验证（如果未验证是上传不了的）</li>
+<li><p>切换到需要发包的项目根目录下，登录npm账号，输入用户名、密码、邮箱</p>
+<pre><code>npm login
+</code></pre></li>
+<li><p>发布之前先检查下npm有木有相同的包名，如果没有的话就恭喜你了，有的话那你就需要修改<code>package.json</code>的name了</p>
+<pre><code>npm search vue-alert-loading
+</code></pre></li>
+<li><p>如果没有的话就执行npm publish</p>
+</li>
+<li><p>如果需要移除你的包的话就执行npm unpublish –force：移除一个发布包（也可以移除指定版本的包）只有24小时内有效，过了24小时就不能移除，至于为什么，自己百度去吧嘿嘿</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.png" alt="Joven WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Joven Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/25/Linux-Nginx安装/" rel="next" title="Linux-Nginx安装">
+                <i class="fa fa-chevron-left"></i> Linux-Nginx安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/25/Kafka-windows/" rel="prev" title="Kafka-windows">
+                Kafka-windows <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://owpnvitpy.bkt.clouddn.com/touxiang.jpg"
+               alt="Joven" />
+          <p class="site-author-name" itemprop="name">Joven</p>
+           
+              <p class="site-description motion-element" itemprop="description">从哪里跌倒，就从哪爬起来！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="chenjunwenchn@qq.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenjunwen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/acb4fdd1006a" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.google.com.hk/" title="谷歌" target="_blank">谷歌</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目案例-vue-alert-loading"><span class="nav-number">1.</span> <span class="nav-text">项目案例 vue-alert-loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目准备"><span class="nav-number">2.</span> <span class="nav-text">项目准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化组件"><span class="nav-number">3.</span> <span class="nav-text">初始化组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建你的组件"><span class="nav-number">4.</span> <span class="nav-text">创建你的组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改配置项"><span class="nav-number">5.</span> <span class="nav-text">修改配置项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npmignore文件"><span class="nav-number">6.</span> <span class="nav-text">.npmignore文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打包至本地"><span class="nav-number">7.</span> <span class="nav-text">打包至本地</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布至npm"><span class="nav-number">8.</span> <span class="nav-text">发布至npm</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Joven</span>
+</div>
+
+
+<div class="powered-by">
+  小白教程
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://chenjunwen.github.io/2017/11/25/vue自定义组件发布至npm/';
+          this.page.identifier = '2017/11/25/vue自定义组件发布至npm/';
+          this.page.title = 'vue自定义组件发布至npm';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
