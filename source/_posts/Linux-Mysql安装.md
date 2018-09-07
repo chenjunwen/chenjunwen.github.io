@@ -65,6 +65,6 @@ mysql安装完成之后，在/var/log/mysqld.log文件中给root生成了一个�
     firewall-cmd --reload
 
 
-## 默认配置文件路径：  
+## 默认配置文件路径
 > 配置文件：/etc/my.cnf  日志文件：/var/log//var/log/mysqld.log  服务启动脚本：/usr/lib/systemd/system/mysqld.service  socket文件：/var/run/mysqld/mysqld.pid
 ## [辅助文档](http://www.centoscn.com/mysql/2016/0626/7537.html)    
