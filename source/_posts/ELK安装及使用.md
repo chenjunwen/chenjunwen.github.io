@@ -11,7 +11,10 @@ Kibana：可视化化平台。它能够搜索、展示存储在 Elasticsearch �
 
 当然，除了ELK，行业内还有一些轻量型数据采集方案，比如Beats、Loki。
 Filebeat：轻量级数据收集引擎。相对于Logstash所占用的系统资源来说，Filebeat 所占用的系统资源几乎是微乎及微。它是基于原先 Logstash-fowarder 的源码改造出来。换句话说：Filebeat就是新版的 Logstash-fowarder，也会是 ELK Stack 在 Agent 的第一选择。
-
+# ELK常见架构
+* Elasticsearch + Logstash + Kibana：这种架构，通过Logstash收集日志，Elasticsearch分析日志，然后在Kibana中展示数据。这种架构虽然是官网介绍里的方式，但是在生产中却很少使用。
+* Elasticsearch + Logstash + filebeat + Kibana：与上一种架构相比，增加了一个filebeat模块。filebeat是一个轻量的日志收集代理，用来部署在客户端，优势是消耗非常少的资源(较logstash)就能够收集到日志。所以在生产中，往往会采取这种架构方式，但是这种架构有一个缺点，当logstash出现故障， 会造成日志的丢失。
+* Elasticsearch + Logstash + filebeat + redis + Kibana：此种架构是上面架构的完善版，通过增加中间件，来避免数据的丢失。当Logstash出现故障，日志还是存在中间件中，当Logstash再次启动，则会读取中间件中积压的日志。
 
 # 在Docker环境下部署 Elasticsearch 可视化工具
 ## 什么是Elasticsearch？
@@ -142,13 +145,14 @@ Logstash 支持各种输入选择，可以同时从众多常用来源捕捉事�
         - pipeline.id: logstash_dev
         path.config: /usr/share/logstash/pipeline/logstash_dev.conf
 
-        配置文件 logstash_dev.conf 放在e:/elk/logstash/pipeline下
+        配置文件 logstash_dev.conf 放在e:/elk/logstash/pipeline下，注意使用空格，不要使用 Tab
         touch logstash_dev.conf
         vi logstash_dev.conf
         
         input {
             beats {
-                port => 9900
+                #5044端口是logstash启动的tcp监听端口
+                port => 5044
             }
         }
         
@@ -165,6 +169,7 @@ Logstash 支持各种输入选择，可以同时从众多常用来源捕捉事�
         
             geoip {
                 source => "clientip"
+                target => "clientgeo"
             }
         
             useragent {
@@ -180,10 +185,110 @@ Logstash 支持各种输入选择，可以同时从众多常用来源捕捉事�
         output {
             stdout { }
             elasticsearch {
-                hosts => ["127.0.0.1:9200"]
+                hosts => ["10.62.31.216:9200"]
                 index => "example"
             }
         }
 4.启动容器
     
-    docker run -d -it --restart=always  --privileged=true  --name=logstash -p 5047:5047 -p 9600:9600 -v e:/elk/logstash/pipeline:/usr/share/logstash/pipeline/      -v e:/elk/logstash/config:/usr/share/logstash/config/ logstash:8.6.2
+    docker run -d -it --restart=always  --privileged=true  --name=logstash -p 5044:5044 -p 9600:9600 -v e:/elk/logstash/pipeline:/usr/share/logstash/pipeline/      -v e:/elk/logstash/config:/usr/share/logstash/config/ logstash:8.6.2
+
+# 在Docker环境下部署 kibana
+
+## 什么是 Kibana？
+Kibana是一个开源的分析与可视化平台，设计出来用于和Elasticsearch一起使用的。
+你可以用kibana搜索、查看存放在Elasticsearch中的数据。Kibana与Elasticsearch的交互方式是各种不同的图表、表格、地图等，直观的展示数据，从而达到高级的数据分析与可视化的目的。
+
+
+# 部署 Kibana 可视化工具
+## 拉取镜像
+
+    docker pull kibana:8.6.2
+
+## 创建kibana配置文件
+
+    mkdir e:/elk/kibana/
+    touch e:/elk/kibana/kibana.yml
+
+## 配置kibana.yml
+
+    #
+    # ** THIS IS AN AUTO-GENERATED FILE **
+    #
+    
+    # Default Kibana configuration for docker target
+    server.name: kibana
+    server.host: "0.0.0.0"
+    server.shutdownTimeout: "5s"
+    # es宿主机访问地址
+    elasticsearch.hosts: [ "http://10.62.31.216:9200" ]
+    xpack.monitoring.ui.container.elasticsearch.enabled: true
+    # 配置中文显示
+    i18n.locale: "zh-CN"
+
+
+## 部署Kibana
+    
+    docker run -d --restart=always --log-driver json-file --log-opt max-size=500m --log-opt max-file=2 --name kibana -p 5601:5601 -v e:/elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml kibana:8.6.2
+
+
+# 在Docker环境下部署 Filebeat
+## 什么是Filebeat
+轻量级数据收集引擎。相对于Logstash所占用的系统资源来说，Filebeat 所占用的系统资源几乎是微乎及微。它是基于原先 Logstash-fowarder 的源码改造出来。换句话说：Filebeat就是新版的 Logstash-fowarder，也会是 ELK Stack 在 Agent 的第一选择。
+
+## Filebeat工作流程
+Filebeat主要包含两个组件：输入和收割机，这些组件协同工作将文件尾部最新事件数据发送到指定的输出
+
+- 输入（input）：负责管理收割机从哪个路径查找所有可读取的资源
+- 收割机（Harvester）：负责逐行读取单个文件的内容，然后将内容发送到输出
+![img.png](../imgs/filebeat.png)
+
+## 拉取镜像
+    docker run elastic/filebeat:8.6.2
+
+## 创建filebeat配置文件
+
+    mkdir e:/elk/filebeat/
+    touch e:/elk/filebeat/filebeat.yml
+## ## 配置kibana.yml
+
+    #filebeat默认值为auto，创建的elasticsearch索引生命周期为50GB+30天。如果不改，可以不用设置
+    #从7.0版本开始，索引生命周期管理（ILM）默认是开启状态，当开启状态时候，setup.template.name和
+    #setup.template.pattern两个参数不生效，所以还需要配置关闭ILM，即setup.ilm.enabled: false
+    setup.ilm.enabled: false
+    # # 生成index模板的名称
+    setup.template.name: "chenjw-log"
+    # # 生成index模板匹配的index格式
+    setup.template.pattern: "chenjw-*"
+
+    ## 模板设置
+    setup.template.settings:
+      #主分片数，默认为1
+      index.number_of_shards: 5
+      # 副本分片数，默认为1
+      index.number_of_replicas: 0
+      # index数据存储的编码方式（压缩方式）
+      index.codec: best_compression
+
+    filebeat.inputs:
+      - type: log				##文本日志
+      # 标签过滤的时候可以使用,这里用项目名
+      tags: ["mideadc"]
+      # 需要收集的日志所在的位置，可使用通配符进行配置
+      paths:
+        - /elk/logs/*/*.log
+
+    output.elasticsearch:  			#输出到elasticsearch，也可以输出到logstash
+      hosts: ["10.62.31.216:9200"] 	#elasticsearch地址,
+      index: "filebeat-%{+yyyy.MM.dd}"
+
+
+    #日志输出配置(采用 logstash 收集日志，5044为logstash端口) 注意：Logstash和Elasticsearch选择一个作为日志输出即可，不能同时选择
+    #output.logstash:
+    #  hosts: ['10.62.31.216:5044']
+
+## 启动Filebeat
+
+    docker run -d --name filebeat --restart=always -e TZ=Asia/Shanghai -v e:/elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml -v e:/IdeaProject/置业云/置业云后台/logs:/elk/logs/ elastic/filebeat:8.6.2
+
+## ELK使用教程
