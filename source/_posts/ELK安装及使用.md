@@ -289,6 +289,6 @@ Filebeat主要包含两个组件：输入和收割机，这些组件协同工作
 
 ## 启动Filebeat
 
-    docker run -d --name filebeat --restart=always -e TZ=Asia/Shanghai -v e:/elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml -v e:/IdeaProject/置业云/置业云后台/logs:/elk/logs/ elastic/filebeat:8.6.2
+                                                                                            docker run -d --name filebeat --restart=always -e TZ=Asia/Shanghai -v e:/elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml -v e:/IdeaProject/置业云/置业云后台/logs:/elk/logs/ elastic/filebeat:8.6.2
 
 ## ELK使用教程
