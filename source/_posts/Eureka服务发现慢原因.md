@@ -1,11 +1,12 @@
 ---
 title: 一文给你道破Eureka服务发现慢的原因，深度剖析Eureka客户端服务发现原理以及 Eureka服务端服务剔除原理
 date: 2023-07-03 15:41:08
-tags: java
+tags: Spring Cloud
 ---
 
 ## 先直接给出配置让你尝鲜
 > EurekaServer端配置
+
 ```
 eureka:
     server:
@@ -49,7 +50,7 @@ ribbon:
 * 服务端缓存
 如图所示
 
-![服务端缓存](..\imgs\eureka.png)
+![服务端缓存](../images/eureka.png)
 
 服务注册到注册中心后，服务实例信息是存储在注册表中的，也就是内存中。但Eureka为了提高响应速度，在内部做了优化，加入了两层的缓存结构，将Client需要的实例信息，直接缓存起来，获取的时候 直接从缓存中拿数据然后响应给 Client。
 

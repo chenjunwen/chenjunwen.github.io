@@ -87,7 +87,7 @@ logstash数据收集处理引擎。支持动态的从各种数据源搜集数据
 ## 工作方式
 管道（Logstash Pipeline）是Logstash中独立的运行单元，每个管道都包含两个必须的元素输入（input）和输出（output），和一个可选的元素过滤器（filter），事件处理管道负责协调它们的执行。
 输入和输出支持编解码器，使您可以在数据进入或退出管道时对其进行编码或解码，而不必使用单独的过滤器。如：json、multiline等
-![img.png](../imgs/logstash.png)
+![img.png](../images/logstash.png)
 > inputs（输入阶段）
 
 Logstash 支持各种输入选择，可以同时从众多常用来源捕捉事件。
@@ -241,7 +241,7 @@ Filebeat主要包含两个组件：输入和收割机，这些组件协同工作
 
 - 输入（input）：负责管理收割机从哪个路径查找所有可读取的资源
 - 收割机（Harvester）：负责逐行读取单个文件的内容，然后将内容发送到输出
-![img.png](../imgs/filebeat.png)
+![img.png](../images/filebeat.png)
 
 ## 拉取镜像
     docker run elastic/filebeat:8.6.2
