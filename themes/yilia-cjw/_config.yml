@@ -68,10 +68,10 @@ top: true
 # Miscellaneous
 baidu_analytics: ''
 google_analytics: ''
-favicon: images/logo.jpg
+favicon: /images/logo.jpg
 
 #你的头像url
-avatar: images/logo.jpg
+avatar: /images/logo.jpg
 
 #是否开启分享
 share_jia: true
