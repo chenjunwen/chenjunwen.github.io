@@ -297,3 +297,6 @@ eureka:
 如果有大批量的集群且存在网络分区，强烈建议开启自我保护机制
 ### spring eureka 服务实例实现快速下线快速感知快速刷新配置解析
 https://blog.csdn.net/zhxdick/article/details/78560993
+
+### 基于 nacos/springcloud/k8s 的不停机服务更新[graceful shutdown]
+https://zhuanlan.zhihu.com/p/548458767?utm_id=0
